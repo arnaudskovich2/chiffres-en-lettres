@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiffres en lettres</title>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/all.min.js"></script>
+    <script src="src/index.js"></script>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/all.min.css">
+</head>
+
+<body class="container" style="background-color: whitesmoke">
+    <header class="row">
+        <div class="navbar navbar-expand navbar-light bg-secondary col justify-content-center">
+            <span class="navbar-brand text-light" style="text-align: center;">
+                CONVERTISSEUR EN LETTRES DE NOMBRES EN CHIFFRES
+            </span>
+        </div>
+    </header>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <form action="" method="post" id="form">
+                <div class="form-group">
+                    <label for="number" class="col-form-label" style="text-decoration: underline; text-decoration-color: currentColor; font-weight: bold;">Entrez le nombre en chiffres</label>
+                    <input type="number" name="number" id="number" class="input-md form-control border-primary" maxlength="3" minlength="1" aria-describedby="#info " placeholder="Ex: 0000000010 ou 20" autofocus required>
+                    <small id="info" class="text-info">
+                        <i class="fa fa-info-circle"></i>
+                        Un nombre entier au maximum de 3 chiffres. Sans compter les zéros en avant du nombre!
+                    </small>
+                    <small id="erreur" class="text-danger">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <span id="errtxt"></span>
+                    </small>
+                </div>
+                <div class="form-group"><button type="submit" class="btn btn-outline-primary btn-block"> <strong>Convertir</strong> <i class="fa fa-arrow-alt-circle-right"></i></button></div>
+            </form>
+        </div>
+        <div class="w-100"></div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="letter" class="col-form-label" style="text-decoration: underline; text-decoration-color: currentColor; font-weight: bold;">Résultat en lettres</label>
+                <textarea name="letter" id="letter" cols="30" rows="10" class="form-control border-success" readonly></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-block alert-info" style="text-align: center;">
+        <span class="text-success" style="font-weight: bold;"> by <span style="font-size:large;">ARNAUDSKOVICH2</span>
+    </div>
+    <script>
+        $("#erreur").hide(0);
+        $(function() {
+            $("#number").keydown(function(e) {
+                if (/^[a-zA-Z,.-]{1}$/.test(e.key)) {
+                    $("#errtxt").html('Le caractère <strong style="font-size:1em">"' + e.key + '"</strong> n\'est pas autorisé !');
+                    $("#erreur").show('fast').delay(2000).fadeOut(1000);
+                    return false;
+                }
+            })
+
+            $("#form").submit(function() {
+                let value = $("#number").val();
+                if (/^[0-9]{1,}$/.test(value)) {
+                    if (parseInt(value) < 1000 && parseInt(value) >= 0) {
+                        $("#letter").text(toLetter(parseInt(value)));
+                    } else {
+                        $("#errtxt").html('Le nombre entré doit être compris entre 0 et 999 <strong>[0 ; 999]</strong>');
+                        $("#erreur").show('fast').delay(2000).fadeOut(1000);
+                    }
+
+                } else {
+                    $("#errtxt").html('Seuls les caractères numeriques sont autorisés !');
+                    $("#erreur").show('fast').delay(2000).fadeOut(1000);
+                }
+
+                return false;
+            })
+
+            $("#number").change(function(e) {
+                let value = $("#number").val();
+                if (/^[0-9]{1,}$/.test(value)) {
+                    if (parseInt(value) < 1000 && parseInt(value) >= 0) {
+                        $("#letter").text(toLetter(parseInt(value)));
+                    } else {
+                        $("#errtxt").html('Le nombre entré doit être compris entre 0 et 999 <strong>[0 ; 999]</strong>');
+                        $("#erreur").show('fast').delay(2000).fadeOut(1000);
+                    }
+
+                } else {
+                    $("#errtxt").html('Seuls les caractères numeriques sont autorisés !');
+                    $("#erreur").show('fast').delay(2000).fadeOut(1000);
+                }
+
+                return false;
+            })
+        })
+    </script>
+</body>
+
+</html>
